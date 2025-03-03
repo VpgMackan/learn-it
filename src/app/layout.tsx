@@ -25,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-950 min-h-screen overflow-y-hidden text-purple-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-950 min-h-screen text-purple-100 overflow-y-hidden`}
       >
         <div className="m-4 flex flex-col h-[calc(100vh-2rem)]">
-          <div className="bg-zinc-900/40 w-full p-8 rounded-4xl flex-grow shadow-[0px_0px_30px_6px] shadow-zinc-700/40">
+          <div className="bg-zinc-900/40 w-full p-32 rounded-4xl flex-grow shadow-[0px_0px_30px_6px] shadow-zinc-700/40">
             {children}
           </div>
         </div>
