@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Sets } from "../../types/types";
+import { Sets } from "@/types/types";
 
 const mockdata: Sets[] = [
   {
