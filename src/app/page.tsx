@@ -2,31 +2,12 @@
 
 import { useEffect, useState, useRef } from "react";
 import { Sets } from "@/types/types";
-import { v4 } from "uuid";
 import Image from "next/image";
-
-const set = () => {
-  return {
-    name: "Engelska Glossor Vecka 14",
-    cards: [
-      {
-        back: "Hallå",
-        front: "Hello",
-        number: 0,
-        id: "253ea86d-a086-4106-af6e-fe57cc889c0a",
-      },
-    ],
-    color: "#064e3b",
-    id: v4(),
-  };
-};
-
-const mockdata: Sets[] = [set(), set(), set()];
 
 export default function Home() {
   const [setsData, setSetsData] = useState<Sets[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [showArrow, setShowArrow] = useState<boolean>(true);
+  const [showArrow, setShowArrow] = useState<boolean>(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,12 +15,19 @@ export default function Home() {
 
     if (storedData) {
       setSetsData(JSON.parse(storedData));
-    } else {
-      setSetsData(mockdata);
     }
 
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } =
+        scrollContainerRef.current;
+      const isNearBottom = scrollTop + clientHeight >= scrollHeight - 40;
+      setShowArrow(!isNearBottom);
+    }
+  });
 
   return (
     <div className="">
@@ -87,6 +75,7 @@ export default function Home() {
                       key={set.id}
                       style={{ background: set.color }}
                       className="p-4 rounded-lg hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => (window.location.href = `/card/${set.id}`)}
                     >
                       <div className="flex flex-col">
                         <span className="text-lg mb-2">{set.name}</span>

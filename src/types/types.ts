@@ -5,7 +5,7 @@ export interface Card {
   id: string;
 }
 
-export interface Sets {
+export interface Sets extends Array<Object> {
   name: string;
   cards: Card[];
   color: string;
