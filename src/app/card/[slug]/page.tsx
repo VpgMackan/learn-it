@@ -52,19 +52,28 @@ export default function SetId({
               }}
               className="bg-zinc-900/50 flex justify-between items-center rounded-4xl p-3"
             >
-              <span className="ml-3 text-2xl">Your sets</span>
-              <button
-                className="bg-violet-900 rounded-4xl p-3 pl-8 pr-8"
-                onClick={() => alert("Hello")}
-              >
-                Create New
-              </button>
+              <span className="ml-3 text-2xl">Your cards</span>
+
+              <div>
+                <button
+                  className="bg-blue-500 rounded-4xl p-3 pl-8 pr-8 mr-4 cursor-pointer"
+                  onClick={() => alert("Hello")}
+                >
+                  Add New
+                </button>
+                <button
+                  className="bg-violet-500 rounded-4xl p-3 pl-8 pr-8 cursor-pointer"
+                  onClick={() => (window.location.href += "/train")}
+                >
+                  Learn!
+                </button>
+              </div>
             </div>
 
             <div className="relative bg-zinc-900/50 mt-6 rounded-xl">
               <div
                 ref={scrollContainerRef}
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto p-4 max-h-[60vh] pb-10"
+                className="grid grid-cols-1 gap-4 overflow-y-auto p-4 max-h-[60vh]"
                 onScroll={() => {
                   if (scrollContainerRef.current) {
                     const { scrollTop, scrollHeight, clientHeight } =
@@ -75,27 +84,26 @@ export default function SetId({
                   }
                 }}
               >
-                {/*setData?.length === 0 ? (
+                {setData?.length === 0 ? (
                   <div className="text-center py-10 text-gray-400 col-span-full">
-                    <p>No sets yet. Create your first set to get started!</p>
+                    <p>No cards yet. Create your first set to get started!</p>
                   </div>
                 ) : (
-                  setData?.map((set) => (
+                  setData?.cards.map((set) => (
                     <div
                       key={set.id}
-                      style={{ background: set.color }}
-                      className="p-4 rounded-lg hover:shadow-lg transition-shadow cursor-pointer"
-                      onClick={() => (window.location.href = `/card/${set.id}`)}
+                      className="p-4 rounded-lg bg-zinc-800 items-center flex justify-start"
                     >
-                      <div className="flex flex-col">
-                        <span className="text-lg mb-2">{set.name}</span>
-                        <span className="text-sm">
-                          Cards: {set.cards.length}
-                        </span>
+                      <span className="text-2xl">{set.number}:</span>
+
+                      <div className="flex justify-between flex-grow">
+                        <span className="text-2xl ml-12">{set.front}</span>
+                        <span className="text-2xl">I</span>
+                        <span className="text-2xl mr-12">{set.back}</span>
                       </div>
                     </div>
                   ))
-                )*/}
+                )}
               </div>
 
               {showArrow ? (

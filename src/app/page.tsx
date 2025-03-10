@@ -54,7 +54,7 @@ export default function Home() {
             <div className="relative bg-zinc-900/50 mt-6 rounded-xl">
               <div
                 ref={scrollContainerRef}
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto p-4 max-h-[60vh] pb-10"
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto p-4 max-h-[60vh]"
                 onScroll={() => {
                   if (scrollContainerRef.current) {
                     const { scrollTop, scrollHeight, clientHeight } =
