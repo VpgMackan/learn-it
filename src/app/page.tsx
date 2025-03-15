@@ -4,7 +4,10 @@ import { useEffect, useState, useRef } from "react";
 import { Sets } from "@/types/types";
 import Image from "next/image";
 
+import SetsModal from "./modal";
+
 export default function Home() {
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [setsData, setSetsData] = useState<Sets[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showArrow, setShowArrow] = useState<boolean>(false);
@@ -31,6 +34,7 @@ export default function Home() {
 
   return (
     <div className="">
+      <SetsModal show={showModal} setModal={setShowModal} />
       {isLoading ? (
         <h1>Loading</h1>
       ) : (
@@ -45,7 +49,7 @@ export default function Home() {
               <span className="ml-3 text-2xl">Your sets</span>
               <button
                 className="bg-violet-900 rounded-4xl p-3 pl-8 pr-8"
-                onClick={() => alert("Hello")}
+                onClick={() => setShowModal(true)}
               >
                 Create New
               </button>
