@@ -34,8 +34,8 @@ export default function Home() {
       {isLoading ? (
         <h1>Loading</h1>
       ) : (
-        <div>
-          <div className=" pb-10">
+        <div className="relative h-screen">
+          <div className="pb-10">
             <span className="text-6xl">
               Welcome to <span className="italic underline">Learn It</span>
             </span>
