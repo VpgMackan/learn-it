@@ -1,17 +1,35 @@
 import { Card, Set } from "@/types/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 
 export default function SetsModal({
   show,
   setModal,
+  optionalData,
 }: {
   show: boolean;
   setModal: any;
+  optionalData?: Set;
 }) {
   const [cardList, setCardList] = useState<Card[]>([]);
   const [setName, setSetName] = useState<string>("");
   const [setColor, setSetColor] = useState<string>("");
+  const [setId, setSetId] = useState<string>(v4());
+
+  const [exists, setExists] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(optionalData);
+    if (optionalData !== undefined) {
+      console.log(optionalData);
+      setCardList(optionalData.cards);
+      setSetName(optionalData.name);
+      setSetColor(optionalData.color);
+      setSetId(optionalData.id);
+
+      setExists(true);
+    }
+  }, [show]);
 
   const addCard = () => {
     const cardElement: Card = {
@@ -31,15 +49,25 @@ export default function SetsModal({
       name: setName,
       cards: cardList,
       color: setColor,
-      id: v4(),
+      id: setId,
     };
 
     const sets = window.localStorage.getItem("sets");
     if (sets) {
-      window.localStorage.setItem(
-        "sets",
-        JSON.stringify([...JSON.parse(sets), setData])
-      );
+      if (exists) {
+        window.localStorage.setItem(
+          "sets",
+          JSON.stringify([
+            ...JSON.parse(sets).filter((set: Set) => set.id !== setId),
+            setData,
+          ])
+        );
+      } else {
+        window.localStorage.setItem(
+          "sets",
+          JSON.stringify([...JSON.parse(sets), setData])
+        );
+      }
     } else {
       window.localStorage.setItem("sets", JSON.stringify([setData]));
     }
@@ -104,6 +132,7 @@ export default function SetsModal({
                   id="name"
                   placeholder="Enter set name"
                   onChange={(e) => setSetName(e.target.value)}
+                  value={setName}
                   className="mt-1 block w-full rounded-md bg-zinc-700 text-purple-100 border border-zinc-600 p-2"
                 />
               </div>
@@ -120,6 +149,7 @@ export default function SetsModal({
                   id="color"
                   type="color"
                   onChange={(e) => setSetColor(e.target.value)}
+                  value={setColor}
                   className="mt-1 block w-16 h-10 border-none"
                 />
               </div>
@@ -165,7 +195,7 @@ export default function SetsModal({
             </div>
 
             <div className="relative bg-zinc-900/50 mt-6 rounded-xl">
-              <div className="grid grid-cols-1 gap-4 overflow-y-auto p-4 max-h-[60vh]">
+              <div className="grid grid-cols-1 gap-4 overflow-y-auto p-4 max-h-[35vh]">
                 {cardList?.length === 0 ? (
                   <div className="text-center py-10 text-gray-400 col-span-full">
                     <p>No cards yet. Create your first set to get started!</p>

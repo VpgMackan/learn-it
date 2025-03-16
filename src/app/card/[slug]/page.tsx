@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Sets, Card } from "@/types/types";
+import { Sets, Card, Set } from "@/types/types";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import SetsModal from "@/app/modal";
 
 export default function SetId({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const [setData, setSetData] = useState<Sets | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [setData, setSetData] = useState<Set | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showArrow, setShowArrow] = useState<boolean>(false);
   const [slug, setSlug] = useState<string | null>(null);
@@ -31,13 +33,30 @@ export default function SetId({
 
     const tempSetData: Sets[] = JSON.parse(storedData);
     const foundSet = tempSetData.find((i: Sets) => i.id === slug);
-    setSetData(foundSet || null);
+    setSetData(foundSet || undefined);
 
     setIsLoading(false);
   }, [slug]);
 
+  const deleteSet = () => {
+    const sets = window.localStorage.getItem("sets");
+    if (sets) {
+      const data = JSON.stringify(
+        JSON.parse(sets).filter((set: Set) => set.id !== slug)
+      );
+      window.localStorage.setItem("sets", data);
+    }
+
+    window.location.href = "/";
+  };
+
   return (
     <div className="">
+      <SetsModal
+        show={showModal}
+        setModal={setShowModal}
+        optionalData={setData}
+      />
       {isLoading ? (
         <h1>Loading</h1>
       ) : (
@@ -57,9 +76,15 @@ export default function SetId({
               <div>
                 <button
                   className="bg-blue-500 rounded-4xl p-3 pl-8 pr-8 mr-4 cursor-pointer"
-                  onClick={() => alert("Hello")}
+                  onClick={() => deleteSet()}
                 >
-                  Add New
+                  Delete
+                </button>
+                <button
+                  className="bg-blue-500 rounded-4xl p-3 pl-8 pr-8 mr-4 cursor-pointer"
+                  onClick={() => setShowModal(true)}
+                >
+                  Edit
                 </button>
                 <button
                   className="bg-violet-500 rounded-4xl p-3 pl-8 pr-8 cursor-pointer"
@@ -84,7 +109,7 @@ export default function SetId({
                   }
                 }}
               >
-                {setData?.length === 0 ? (
+                {setData?.cards.length === 0 ? (
                   <div className="text-center py-10 text-gray-400 col-span-full">
                     <p>No cards yet. Create your first set to get started!</p>
                   </div>
