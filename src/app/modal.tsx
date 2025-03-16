@@ -48,7 +48,18 @@ export default function SetsModal({
   };
 
   const deleteCard = ({ id }: { id: string }) => {
-    const newCardList = cardList.filter((card) => card.id !== id);
+    const temporaryCardList = cardList.filter((card) => card.id !== id);
+    let newCardList: Card[] = [];
+
+    temporaryCardList.forEach((card) => {
+      newCardList.push({
+        front: card.front,
+        back: card.back,
+        id: card.id,
+        number: newCardList.length + 1,
+      });
+    });
+
     setCardList(newCardList);
   };
 
