@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Sets, Card, Set } from "@/types/types";
+import { Sets, Set } from "@/types/types";
 import { redirect } from "next/navigation";
 
 const CardComponent = ({ cardCompletion = 4 }: { cardCompletion: number }) => {
@@ -52,7 +52,7 @@ const FinishModalComponent = ({
 
     if (wrongAnswersCalc == undefined) return alert("Error during calculation");
     setWrongAnswers(wrongAnswersCalc);
-  }, [show]);
+  }, [show, data, answers]);
 
   return (
     <div
@@ -152,7 +152,7 @@ export default function Home({
       setSlug((await params).slug);
     };
     getSlug();
-  }, []);
+  }, [params]);
 
   useEffect(() => {
     if (slug == null) return;
@@ -349,7 +349,7 @@ export default function Home({
           </div>
         </div>
       ) : (
-        <p>Cards don't exist try to reload</p>
+        <p>Cards don&apos;t exist try to reload</p>
       )}
     </div>
   );

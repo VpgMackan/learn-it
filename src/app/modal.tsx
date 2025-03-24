@@ -1,3 +1,4 @@
+import { Dispatch } from "react";
 import { Card, Set } from "@/types/types";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
@@ -8,7 +9,7 @@ export default function SetsModal({
   optionalData,
 }: {
   show: boolean;
-  setModal: any;
+  setModal: Dispatch<React.SetStateAction<boolean>>;
   optionalData?: Set;
 }) {
   const [cardList, setCardList] = useState<Card[]>([]);
@@ -29,7 +30,7 @@ export default function SetsModal({
 
       setExists(true);
     }
-  }, [show]);
+  }, [show, optionalData]);
 
   const addCard = () => {
     const cardElement: Card = {
@@ -77,7 +78,7 @@ export default function SetsModal({
 
   const deleteCard = ({ id }: { id: string }) => {
     const temporaryCardList = cardList.filter((card) => card.id !== id);
-    let newCardList: Card[] = [];
+    const newCardList: Card[] = [];
 
     temporaryCardList.forEach((card) => {
       newCardList.push({

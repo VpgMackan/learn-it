@@ -12,7 +12,7 @@ export interface Set {
   id: string;
 }
 
-export interface Sets extends Array<Object> {
+export interface Sets extends Array<object> {
   name: string;
   cards: Card[];
   color: string;

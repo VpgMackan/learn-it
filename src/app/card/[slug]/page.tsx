@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Sets, Card, Set } from "@/types/types";
+import { Sets, Set } from "@/types/types";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import SetsModal from "@/app/modal";
@@ -23,7 +23,7 @@ export default function SetId({
       setSlug((await params).slug);
     };
     getSlug();
-  }, []);
+  }, [params]);
 
   useEffect(() => {
     if (slug == null) return;

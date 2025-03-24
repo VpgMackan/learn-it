@@ -30,7 +30,7 @@ export default function Home() {
       const isNearBottom = scrollTop + clientHeight >= scrollHeight - 40;
       setShowArrow(!isNearBottom);
     }
-  });
+  }, [setShowArrow]);
 
   return (
     <div className="">
