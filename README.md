@@ -1,6 +1,9 @@
 # Learn It
 Learn It is an extremely minimal quiz platform developed by Markus Nielsen as a final project for programming 1.
 
+Demo: https://learn-it.vercel.app
+
+
 ## Features
 Learn it has the following urls:
 
