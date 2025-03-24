@@ -75,7 +75,7 @@ export default function SetId({
 
               <div>
                 <button
-                  className="bg-blue-500 rounded-4xl p-3 pl-8 pr-8 mr-4 cursor-pointer"
+                  className="bg-red-500 rounded-4xl p-3 pl-8 pr-8 mr-4 cursor-pointer"
                   onClick={() => deleteSet()}
                 >
                   Delete
